@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soumen Pore</title>
+    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/9MN00Vrn/Whats-App-Image-2025-03-23-at-12-28-14-174b753f.jpg">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Initial state for header animation */
+        #navbar {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        
+        /* Animation keyframes */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Animated background for dark mode */
+        :root[data-theme="dark"] .hero {
+            background: linear-gradient(45deg, #111827, #1f2937, #111827);
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        /* New animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: rotate(-90deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Shine effect */
+        @keyframes shine {
+            0% {
+                background-position: -100% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* Counter animation */
+        .counter-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .counter-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Timeline animations */
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Education card animations */
+        .education-card {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .education-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* X (Twitter) icon styling */
+        .x-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .x-icon::before {
+            content: "𝕏";
+            font-family: Arial, sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #fff 20%, #ddd 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .social-button:hover .x-icon::before {
+            transform: scale(1.2) rotate(5deg);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Special styling for X social button */
+        .social-button.x-button {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .social-button.x-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .social-button.x-button:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .social-button.x-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Particle animation */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+        <script>
+    // Load saved theme with animation
+    document.addEventListener("DOMContentLoaded", function() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        const html = document.documentElement;
+        const themeIcon = document.querySelector("#themeToggle i");
+        
+        // Set theme without animation on initial load
+        html.setAttribute("data-theme", savedTheme);
+        themeIcon.className = savedTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
+    });
+</script>
+</head>
+<body>
+    
+    <div class="page-transition"></div>
+    
+    <nav id="navbar">
+        <div class="nav-content">
+            <div class="nav-logo-container">
+                <h1 class="logo">
+                    <img src="https://i.postimg.cc/9MN00Vrn/Whats-App-Image-2025-03-23-at-12-28-14-174b753f.jpg" alt="Soumen Pore" style="height: 40px; width: 40px; border-radius: 50%; vertical-align: middle; margin-right: 10px;">
+                    <span>Soumen</span>
+                </h1>
+                <button id="mobileMenuToggle" class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#stats" class="nav-link">Stats</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#achievements" class="nav-link">Achievements</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="animated-bg"></div>
+        <div class="hero-content">
+            <div class="profile-image animate-float">
+                <img src="https://i.postimg.cc/9MN00Vrn/Whats-App-Image-2025-03-23-at-12-28-14-174b753f.jpg" alt="Soumen Pore">
+                <div class="profile-border"></div>
+            </div>
+            <h1 class="animate-element">Hi, I'm <span class="highlight">Soumen Pore</span></h1>
+            <p class="subtitle animate-element">Aspiring Developer & Creative Professional</p>
+            <div class="cta-buttons animate-element">
+                <div class="cta-actions">
+                    <a href="#contact" class="cta-button">Get in Touch</a>
+                    <a href="/Soumen_Pore_resume.pdf" class="ghost-button" download>Download Resume</a>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/Soumen-dev-ux" target="_blank" class="social-button github-button">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/soumen-pore-3998b1312/" target="_blank" class="social-button linkedin-button">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.instagram.com/your_sou_0109/" target="_blank" class="social-button instagram-button">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://x.com/SoumenPore62983" target="_blank" class="social-button x-button">
+                        <span class="x-icon"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll Down</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about reveal-section">
+        <div class="section-header">
+            <span class="section-tag">About Me</span>
+            <h2>Who I Am</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Aspiring developer and creative professional skilled in development, design, and visual arts, blending technical expertise with artistic vision to craft engaging digital experiences.</p>
+                <div class="skills">
+                    <h3>Technical Skills</h3>
+                    <ul class="skill-list">
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" title="HTML5" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" title="CSS3" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" title="JavaScript" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap" title="Bootstrap" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" title="Java" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" alt="Kotlin" title="Kotlin" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" title="React" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" title="Node.js" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" title="Git" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" title="GitHub" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express.js" title="Express.js" width="40" height="40"></li>
+                        <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" title="MongoDB" width="40" height="40"></li>
+
+                
+                    </ul>
+                    <h3>Creative Skills</h3>
+                    <ul class="skill-list">
+                        <li><span>Graphic Design</span></li>
+                        <li><span>Adobe Creative Suite</span></li>
+                        <li><span>Photography</span></li>
+                        <li><span>Team Lead</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats" class="stats reveal-section">
+        <div class="section-header">
+            <span class="section-tag">Statistics</span>
+            <h2>My Journey in Numbers</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="stats-container">
+            <div class="counter-item">
+                <div class="counter-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="counter-value" data-target="25">0</div>
+                <div class="counter-label">Projects Completed</div>
+            </div>    
+            <div class="counter-item">
+                <div class="counter-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="counter-value" data-target="9">0</div>
+                <div class="counter-label">Hackathons</div>
+            </div>
+            <div class="counter-item">
+                <div class="counter-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="counter-value" data-target="5">0</div>
+                <div class="counter-label">Awards</div>
+            </div>
+            <div class="counter-item">
+                <div class="counter-icon">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div class="counter-value" data-target="15"></div>
+                <div class="counter-label">Google Badges</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects reveal-section">
+        <div class="section-header">
+            <span class="section-tag">Portfolio</span>
+            <h2>My Projects</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="project-grid">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <center><a href="https://techiesou.netlify.app/" class="btn btn-primary" target="_blank">Check My Work</a></center>
+            </div>
+        </div>
+    </section>
+ 
+
+    <section id="achievements" class="achievements reveal-section">
+        <div class="section-header">
+            <span class="section-tag">Recognition</span>
+            <h2>Achievements</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2025</div>
+                <div class="timeline-content">
+                    <h3>Freshers Talent Award</h3>
+                    <p>Recognized for outstanding contributions to web development and innovative solutions as a freshers participant and Team Leader.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2025</div>
+                <div class="timeline-content">
+                    <h3>Participant at NameSpace</h3>
+                    <p>Thrilled to have participated in and led a team at my first national online hackathon, *HACKHAZARDS*, hosted by the amazing NameSpace Community—an incredible journey of innovation, teamwork, and growth!</p>
+                </div>
+            </div>
+    </section>
+
+    <section id="education" class="education reveal-section">
+        <div class="section-header">
+            <span class="section-tag">Learning</span>
+            <h2>Education</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="education-container">
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="education-details">
+                    <h3>Ananntapur Siddheswari High School (H.S.)</h3>
+                    <h4>WBCHSE</h4>
+                    <div class="education-year">2022-2024</div>
+                    <p>Higher Secondary</p>
+                </div>
+            </div>
+            <div class="education-card">
+                <div class="education-icon">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="education-details">
+                    <h3>Joined Gargi Memorial Institute of Technology</h3>
+                    <h4>JIS, MAKAUT</h4>
+                    <div class="education-year">2024-2028</div>
+                    <p>Bachelor of Technology in Electronics & Communication Engineering</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact reveal-section">
+        <div class="section-header">
+            <span class="section-tag">Reach Out</span>
+            <h2>Get in Touch</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Email</h3>
+                        <p>soumenpore7777@gmail.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Location</h3>
+                        <p>West Bengal, India</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Phone</h3>
+                        <p>+91 74328 40665</p>
+                    </div>
+                </div>
+            </div>
+            <!-- modify this form HTML and place wherever you want your form -->
+        <form action="https://formspree.io/f/mjkovjqd"method="POST">
+        <label>
+            Your name:
+            <input type="text" name="name" required>
+        </label>
+
+        <label>
+            Your email:
+            <input type="email" name="email">
+        </label>
+        <label>
+            Subject:
+            <input type="text" name="subject" required>
+        <label>
+            Your message:
+            <textarea name="message"></textarea>
+        </label>
+        <!-- your other form fields go here -->
+        <button type="submit">Send</button>
+        </form>
+        </div>
+    </section>
+
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h2>Soumen<span>Pore</span></h2>
+                <p>Aspiring Developer & Creative Professional</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Connect With Me</h3>
+                <div class="social-links">
+                    <a href="https://github.com/Soumen-dev-ux" target="_blank" class="social-button github-button">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/soumen-pore-3998b1312/" target="_blank" class="social-button linkedin-button">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.instagram.com/your_sou_0109/" target="_blank" class="social-button instagram-button">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://x.com/SoumenPore62983" target="_blank" class="social-button x-button">
+                        <span class="x-icon"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Soumen Pore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="/main.js"></script>
+</body>
+
+<script>
+  var form = document.getElementById("my-form");
+  
+  async function handleSubmit(event) {
+    event.preventDefault();
+    var status = document.getElementById("my-form-status");
+    var data = new FormData(event.target);
+    fetch(event.target.action, {
+      method: form.method,
+      body: data,
+      headers: {
+          'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        status.innerHTML = "Thanks for your submission!";
+        form.reset()
+      } else {
+        response.json().then(data => {
+          if (Object.hasOwn(data, 'errors')) {
+            status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+          } else {
+            status.innerHTML = "Oops! There was a problem submitting your form"
+          }
+        })
+      }
+    }).catch(error => {
+      status.innerHTML = "Oops! There was a problem submitting your form"
+    });
+  }
+  form.addEventListener("submit", handleSubmit)
+</script>
+</html>
